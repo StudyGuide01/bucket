@@ -1,33 +1,31 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+// import './App.css'
+import Drawer from './components/commen/Drawer'
+import Header from './components/commen/Header'
+import MobileNavigation from './components/commen/MobileNavigation'
+import Navigation from './components/layouts/Navigation'
+import Sidebar from './components/layouts/Sidebar'
+import {Routes,Route} from 'react-router-dom'
+import HomeWrapper from './screens/HomeWrapper'
+import Home from './components/layouts/Home'
+import Shorts from './components/layouts/Shorts'
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      {/* Navigation - Sab pages par dikhega */}
+      <Navigation />
+      
+      {/* Routes */}
+      <Routes>
+        {/* HomeWrapper - Sidebar container */}
+        <Route path='/' element={<HomeWrapper />}>
+      
+          <Route index element={<Home />} />
+          {/* Child routes */}
+          <Route path='home' element={<Home />} />
+          <Route path='shorts' element={<Shorts />} />
+        </Route>
+      </Routes>
     </>
   )
 }
