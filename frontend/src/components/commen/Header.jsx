@@ -4,6 +4,12 @@ import { CiMicrophoneOn } from "react-icons/ci";
 import { IoSearchOutline } from "react-icons/io5";
 import { FaPlus } from "react-icons/fa6";
 import { FaRegUserCircle } from "react-icons/fa";
+import { FaGoogle } from "react-icons/fa";
+import { MdSwitchAccount } from "react-icons/md";
+import { MdOutlineArrowForwardIos } from "react-icons/md";
+import { IoLogOut } from "react-icons/io5";
+import ProfileWindow from "../layouts/ProfileWindow";
+
 
 const Header = () => {
   return (
@@ -42,6 +48,8 @@ const Header = () => {
           {/* profile */}
           <div>
 <FaRegUserCircle  className="text-white w-8 h-8"/>
+
+<ProfileWindow/>
           </div>
         </div>
     </div>
