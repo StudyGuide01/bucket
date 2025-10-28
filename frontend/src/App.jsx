@@ -8,6 +8,9 @@ import {Routes,Route} from 'react-router-dom'
 import HomeWrapper from './screens/HomeWrapper'
 import Home from './components/layouts/Home'
 import Shorts from './components/layouts/Shorts'
+import Login from './components/auth/Login'
+import Register from './components/auth/Register'
+import CreateChannel from './components/channel/CreateChannel'
 
 function App() {
   return (
@@ -25,7 +28,14 @@ function App() {
           <Route path='home' element={<Home />} />
           <Route path='shorts' element={<Shorts />} />
         </Route>
+
+        {/* Protected route list */}
+<Route path='/login' element={<Login/>}></Route>
+<Route path='/register' element={<Register/>}></Route>
+<Route path='/create-channel' element={<CreateChannel/>}></Route>
       </Routes>
+
+
     </>
   )
 }

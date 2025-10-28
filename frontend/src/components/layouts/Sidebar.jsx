@@ -25,7 +25,7 @@ const Sidebar = ({open, selectTab, setSelectTab}) => {
   const navigate = useNavigate();
   return (
     <>
-      <aside className="bg-globalBlack w-full max-w-[300px] py-6 px-3 h-screen overflow-y-auto fixed left-0">
+      <aside className="bg-globalBlack w-full  max-w-[250px] py-6 px-3 h-screen overflow-y-auto fixed left-0">
 
         {/* Main tab */}
         <div className="px-4 flex flex-col space-y-2 border-b border-gray-700 pb-4">

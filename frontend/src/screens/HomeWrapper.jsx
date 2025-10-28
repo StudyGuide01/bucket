@@ -14,7 +14,7 @@ const HomeWrapper = () => {
       </div>
 
       {/* Main Content Area - Sidebar ke baad */}
-      <div className='flex-1 lg:ml-[300px]'> 
+      <div className='flex-1 lg:ml-[250px] ml-0'> 
         <Outlet /> {/* Yaha content change hoga */}
       </div>
 

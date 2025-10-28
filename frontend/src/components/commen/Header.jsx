@@ -9,18 +9,35 @@ import { MdSwitchAccount } from "react-icons/md";
 import { MdOutlineArrowForwardIos } from "react-icons/md";
 import { IoLogOut } from "react-icons/io5";
 import ProfileWindow from "../layouts/ProfileWindow";
+import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 
 const Header = () => {
+  const naviage = useNavigate();
+  const [profileWindowOpen,setProfileWindowOpen] = useState(false);
+const profileRef = useRef();
+ useEffect(()=>{
+  const handleClickOutside = (e)=>{
+    if(profileRef.current && !profileRef.current.contains(e.target)){
+      setProfileWindowOpen(false);
+    }
+  }
+
+  document.addEventListener('mousedown',handleClickOutside);
+  return ()=>{
+    document.addEventListener('mousedown',handleClickOutside)
+  }
+ },[])
   return (
 <>
-<header className="flex items-center justify-between px-4 bg-globalBlack py-1">
+<header className="flex items-center justify-between px-4 bg-globalBlack py-1 relative">
  {/* left side */}
     <div>
         {/* logo */}
         <div className="flex items-center justify-center space-x-5">
-            <IoMdMenu className="text-white text-2xl" />
-            <FaYoutube className="text-white text-5xl"/>
+            <IoMdMenu className="text-white text-2xl cursor-pointer"  onClick={()=>naviage('/')}/>
+            <FaYoutube className="text-white text-5xl cursor-pointer"  onClick={()=>naviage('/')}/>
         </div>
     </div>
 
@@ -46,10 +63,14 @@ const Header = () => {
         <div className="flex items-center justify-cente space-x-4">
             <div className="text-white flex items-center justify-center bg-[#222222] py-2 px-5 rounded-2xl gap-2"><FaPlus /> Create</div>
           {/* profile */}
-          <div>
-<FaRegUserCircle  className="text-white w-8 h-8"/>
+          <div ref={profileRef}>
+<FaRegUserCircle onClick={() => setProfileWindowOpen((prev)=>!prev)}   className="text-white w-8 h-8 cursor-pointer"/>
 
-<ProfileWindow/>
+{
+  profileWindowOpen && <div   className="absolute right-3 top-16">
+  <ProfileWindow setProfileWindowOpen={setProfileWindowOpen} />
+</div>
+}
           </div>
         </div>
     </div>

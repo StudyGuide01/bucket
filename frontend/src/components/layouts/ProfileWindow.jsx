@@ -2,7 +2,9 @@ import { FaGoogle } from "react-icons/fa";
 import { MdSwitchAccount } from "react-icons/md";
 import { MdOutlineArrowForwardIos } from "react-icons/md";
 import { IoLogOut } from "react-icons/io5";
-const ProfileWindow = () => {
+import { useNavigate } from "react-router-dom";
+const ProfileWindow = ({setProfileWindowOpen}) => {
+  const navigate = useNavigate();
   return (
 <>
 {/* profile section */}
@@ -15,13 +17,13 @@ const ProfileWindow = () => {
     <div className="flex flex-col space-y-1">
       <h2 className="text-[var(--text-primary-color)]">Name</h2>
       <p className="text-[var(--text-primary-color)]">Example@gmail.com</p>
-      <span className="text-[var(--text-primary-color)]">Create Channel</span>
+      <span className="text-blue-500 cursor-pointer" onClick={()=>navigate('/create-channel')}>Create Channel</span>
     </div>
    </div>
   </div>
 
   {/* auth info */}
-  <div className="border-b border-gray-500 ">
+  <div className="">
        <div className="flex flex-col space-y-4  pb-3 py-4 px-4">
           <div className="flex items-center space-x-5">
             <FaGoogle  className="text-[var(--text-primary-color)] text-2xl"/>
@@ -38,7 +40,8 @@ const ProfileWindow = () => {
 
           <div className="flex items-center space-x-5">
             <IoLogOut  className="text-[var(--text-primary-color)] text-2xl"/>
-            <span className="text-[var(--text-primary-color)]">Log</span>
+            <span className="text-[var(--text-primary-color)] cursor-pointer hover:text-blue-400" onClick={() => {navigate('/login');setProfileWindowOpen((prev) => !prev);}}
+>Login</span>
           </div>
        </div>
 
