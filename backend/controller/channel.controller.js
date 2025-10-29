@@ -89,7 +89,7 @@ export const createChannel = async (req, res) => {
 export const getOwnerChannel = async(req, res)=>{
   try {
     const userId = req.id;
-    const channel = await ChannelModel.findOne({owner:userId});
+    const channel = await ChannelModel.find({owner:userId});
     if(!channel){
       return res.status(404).json({message:'Channel not found, please firt do create',success:false});
     }

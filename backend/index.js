@@ -12,12 +12,14 @@ app.use(cookieParser());
 //routes
 
 import userRouter from './routes/user.router.js';
-import channelRouter from './routes/channel.routr.js'
+import channelRouter from './routes/channel.routr.js';
+import videoRouter from './routes/video.router.js';
 
 
 //configure for get data form body
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
+
 
 
 const corsOrigin = {
@@ -30,6 +32,8 @@ app.use(cors(corsOrigin));
 
 app.use('/api/v1/user',userRouter);
 app.use('/api/v1/channel',channelRouter);
+app.use('/api/v1/video',videoRouter)
+
 
 
 dbConnection()

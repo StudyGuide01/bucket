@@ -11,6 +11,10 @@ import Shorts from './components/layouts/Shorts'
 import Login from './components/auth/Login'
 import Register from './components/auth/Register'
 import CreateChannel from './components/channel/CreateChannel'
+import ChannelScreen from './screens/ChannelScreen'
+import CreateContent from './components/channel/CreateContent'
+import UploadVideoPage from './components/video/UploadVideoPage'
+// import UploadVideoPage from './components/channel/UploadVideoPage'
 
 function App() {
   return (
@@ -27,12 +31,16 @@ function App() {
           {/* Child routes */}
           <Route path='home' element={<Home />} />
           <Route path='shorts' element={<Shorts />} />
+          <Route path='/channel-screen/:id' element={<ChannelScreen/>}/>
+
         </Route>
 
         {/* Protected route list */}
 <Route path='/login' element={<Login/>}></Route>
 <Route path='/register' element={<Register/>}></Route>
 <Route path='/create-channel' element={<CreateChannel/>}></Route>
+<Route path='/create-content' element={<CreateContent/>}></Route>
+<Route path='/create/upload-video' element={<UploadVideoPage/>}></Route>
       </Routes>
 
 

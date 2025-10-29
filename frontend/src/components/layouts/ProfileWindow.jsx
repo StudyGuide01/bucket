@@ -3,8 +3,9 @@ import { MdSwitchAccount } from "react-icons/md";
 import { MdOutlineArrowForwardIos } from "react-icons/md";
 import { IoLogOut } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
-const ProfileWindow = ({setProfileWindowOpen}) => {
+const ProfileWindow = ({setProfileWindowOpen,channels}) => {
   const navigate = useNavigate();
+  console.log('window profile',channels);
   return (
 <>
 {/* profile section */}
@@ -17,7 +18,48 @@ const ProfileWindow = ({setProfileWindowOpen}) => {
     <div className="flex flex-col space-y-1">
       <h2 className="text-[var(--text-primary-color)]">Name</h2>
       <p className="text-[var(--text-primary-color)]">Example@gmail.com</p>
-      <span className="text-blue-500 cursor-pointer" onClick={()=>navigate('/create-channel')}>Create Channel</span>
+     {/* create or view channel  */}
+<div>
+  {channels ? (
+    <div className="relative inline-block group">
+      {/* Trigger Button */}
+      <span className="text-blue-600 font-medium cursor-pointer hover:text-blue-700 transition">
+        View Channels ▾
+      </span>
+
+      {/* Dropdown Menu */}
+      <ul
+        className="absolute left-1/2 -translate-x-1/2 top-8 min-w-[180px]
+                   bg-white text-gray-800 rounded-xl shadow-xl border border-gray-100
+                   opacity-0 invisible group-hover:opacity-100 group-hover:visible
+                   transition-all duration-300 ease-in-out transform
+                   group-hover:translate-y-1 p-3 space-y-2 z-20"
+      >
+      {
+        channels?.map((channel)=>{
+          return(
+              <li key={channel?._id} onClick={()=>navigate(`/channel-screen/${channel?._id}`)} className="px-3 py-2 rounded-lg hover:bg-blue-50 hover:text-blue-600 cursor-pointer">
+          {channel?.channelName}
+        </li>
+          )
+        })
+      }
+       
+       
+      </ul>
+    </div>
+  ) : (
+    <span
+      onClick={() => navigate("/create-channel")}
+      className="text-blue-600 font-medium cursor-pointer hover:text-blue-700 transition"
+    >
+      Create Channel
+    </span>
+  )}
+</div>
+
+
+
     </div>
    </div>
   </div>

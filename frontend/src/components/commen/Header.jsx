@@ -11,12 +11,19 @@ import { IoLogOut } from "react-icons/io5";
 import ProfileWindow from "../layouts/ProfileWindow";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import useGetOwnerChannel from "../../hooks/useGetAllChannel";
+import { useSelector } from "react-redux";
 
 
 const Header = () => {
   const naviage = useNavigate();
+  const profileRef = useRef();
   const [profileWindowOpen,setProfileWindowOpen] = useState(false);
-const profileRef = useRef();
+  const {channels} = useSelector(store=>store.channel);
+
+  
+
+
  useEffect(()=>{
   const handleClickOutside = (e)=>{
     if(profileRef.current && !profileRef.current.contains(e.target)){
@@ -28,7 +35,9 @@ const profileRef = useRef();
   return ()=>{
     document.addEventListener('mousedown',handleClickOutside)
   }
- },[])
+ },[]);
+
+useGetOwnerChannel(profileWindowOpen);
   return (
 <>
 <header className="flex items-center justify-between px-4 bg-globalBlack py-1 relative">
@@ -68,7 +77,7 @@ const profileRef = useRef();
 
 {
   profileWindowOpen && <div   className="absolute right-3 top-16">
-  <ProfileWindow setProfileWindowOpen={setProfileWindowOpen} />
+  <ProfileWindow setProfileWindowOpen={setProfileWindowOpen} channels={channels} />
 </div>
 }
           </div>
