@@ -14,7 +14,7 @@ const userSchema = new mongoose.Schema({
         type:String,
         trim:true
     },
-    channel:{
+    channels:{
         type:mongoose.Schema.Types.ObjectId,
         ref:'Channel'
     },

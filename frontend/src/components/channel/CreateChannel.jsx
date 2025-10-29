@@ -11,6 +11,7 @@ const CreateChannel = () => {
   // local states
   const [photo, setPhoto] = useState(null);
   const [banner, setBanner] = useState(null);
+  const [loading,setLoading] = useState(false);
 
   // form hook
   const {
@@ -59,13 +60,13 @@ const CreateChannel = () => {
     // console.log('data',data);
 
     // ✅ Convert FormData to object safely (for debugging)
-    const entries = {};
-    for (let [key, value] of formData.entries()) {
-        console.log(key, value)
-      entries[key] = value instanceof File ? value.name : value;
-    }
-    console.log("Form submitted:", entries);
- 
+    // const entries = {};
+    // for (let [key, value] of formData.entries()) {
+    //     console.log(key, value)
+    //   entries[key] = value instanceof File ? value.name : value;
+    // }
+    // console.log("Form submitted:", entries);
+ setLoading(true);
    try {
 
 const response = await axios.post(
@@ -89,6 +90,8 @@ const response = await axios.post(
     if (bannerRef.current) bannerRef.current.value = "";
    } catch (error) {
     console.log('frontend error to create channel',error)
+   }finally{
+    setLoading(false)
    }
   };
 
@@ -219,7 +222,7 @@ const response = await axios.post(
             type="submit"
             className="mt-2 bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-lg text-lg font-semibold transition-all duration-200"
           >
-            Create
+            {loading ? 'Loading...' : 'Create'}
           </button>
         </form>
       </div>
