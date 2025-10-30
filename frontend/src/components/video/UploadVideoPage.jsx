@@ -4,13 +4,14 @@ import {useForm} from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import useGetOwnerChannel from "../../hooks/useGetAllChannel";
 import { useLocation } from "react-router-dom";
+import {toast} from 'react-hot-toast';
 
 const UploadVideoPage = () => {
   useGetOwnerChannel(true);
   const [videoUrl,setVideoUrl] = useState(null)
   const [thumbnail,setThumbnail] = useState(null);
   const {register, handleSubmit, formState:{errors},reset} = useForm();
-  const [loading,setLoading] = useState('false');
+  const [loading,setLoading] = useState(false);
 const channelId = JSON.parse(localStorage.getItem('channelId'));
  
 useEffect(() => {
@@ -61,9 +62,12 @@ const onSubmit = async (data) => {
       }
     );
 
-    console.log('✅ Video uploaded successfully:', response.data);
-    // Optionally reset form or redirect
-    // reset(); 
+    if(response.data.success){
+      toast.success(response.data.message);
+      reset();
+    }
+  
+    
   } catch (error) {
     console.error('❌ Error on frontend to upload video:', error);
   } finally {
@@ -201,7 +205,7 @@ const onSubmit = async (data) => {
                 type="submit"
                 className="w-full py-3 bg-blue-600 hover:bg-blue-700 rounded-lg text-lg font-semibold shadow-md transition-all duration-200"
               >
-                Upload
+                {loading ? 'Loading...' : 'Upload'}
               </button>
             </div>
           </form>

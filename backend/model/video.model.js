@@ -51,4 +51,7 @@ const videoSchema = new mongoose.Schema({
     disLike:[{ type:mongoose.Schema.Types.ObjectId,ref:'User',}],
     saveBy:[{ type:mongoose.Schema.Types.ObjectId,ref:'User',}],
    comments:{commentSchema}
-},{timestamps:true})
+},{timestamps:true});
+
+const VideoModel = mongoose.model('Video',videoSchema);
+export default VideoModel;
