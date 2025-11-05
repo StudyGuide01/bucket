@@ -59,7 +59,7 @@ export const getAllVideos = async(req, res)=>{
     try {
         const userId = req.id;
         const {id} = req.params;
-        const video = await VideoModel.find();
+        const video = await VideoModel.find().populate('channel');
         if(!video){
             return res.status(404).json({message:'Videos not found',success:false});
         };

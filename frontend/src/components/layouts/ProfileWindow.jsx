@@ -9,7 +9,7 @@ const ProfileWindow = ({setProfileWindowOpen,channels}) => {
   return (
 <>
 {/* profile section */}
-<div className="bg-[var(--bg-profile-color)] ">
+<div className="bg-[var(--bg-profile-color)]  absolute right-3 top-16">
    
   {/* prifle or name  */}
   <div className="border-b border-gray-500 ">

@@ -8,6 +8,7 @@ const Home = () => {
 
       {/* AllVideoPage will handle the grid layout */}
       <AllVideoPage />
+      
     </div>
   );
 };

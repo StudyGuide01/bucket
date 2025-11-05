@@ -9,12 +9,12 @@ const HomeWrapper = () => {
     <div className='flex bg-black min-h-screen pt-14'> 
       
       {/* Sidebar - Fixed left side */}
-      <div className='hidden lg:block fixed left-0 top-14 h-[calc(100vh-3.5rem)] overflow-y-auto'>
+      <div className='hidden xl:block fixed left-0 top-14 h-[calc(100vh-3.5rem)] overflow-y-auto'>
         <Sidebar open={open} selectTab={selectTab} setSelectTab={setSelectTab}/>
       </div>
 
       {/* Main Content Area - Sidebar ke baad */}
-      <div className='flex-1 lg:ml-[250px] ml-0'> 
+      <div className=' flex-1 xl:ml-[250px] ml-0'> 
         <Outlet /> {/* Yaha content change hoga */}
       </div>
 

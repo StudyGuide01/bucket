@@ -10,12 +10,12 @@ const Navigation = () => {
     
      <div className='fixed top-0 w-full'>
         {/* Header: Hidden on mobile, visible from 1024px (lg) and above */}
-        <div className="hidden lg:block">
+        <div className="hidden xl:block">
           <Header />
         </div>
         
         {/* Drawer: Visible on tablet, hidden from 1024px (lg) and above */}
-        <div className="block lg:hidden">
+        <div className="block xl:hidden">
           <Drawer />
         </div>
 

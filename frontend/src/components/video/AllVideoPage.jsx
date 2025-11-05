@@ -4,7 +4,8 @@ import VideoCart from "./VideoCart";
 
 const AllVideoPage = () => {
   const [allVideo, setAllVideo] = useState([]);
-console.log(allVideo[0]);
+console.log(allVideo);
+
   useEffect(() => {
     const getAllVideos = async () => {
       try {
@@ -24,11 +25,23 @@ console.log(allVideo[0]);
 
   return (
     <>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 ">
-        {allVideo.map((video) => (
-          <VideoCart key={video._id} />
-        ))}
-      </div>
+   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-3 gap-y-10 ">
+    {
+      allVideo?.map((video)=>{
+        return(
+           <VideoCart
+            key={video._id} 
+            id={video._id}
+            title={video.title} 
+            thumbnail={video.thumbnail} 
+            avatar={video?.channel?.avatar}
+            channelName={video?.channel?.channelName}
+            />
+        )
+      })
+    }
+   
+   </div>
     </>
   );
 };

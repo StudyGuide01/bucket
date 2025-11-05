@@ -76,7 +76,7 @@ useGetOwnerChannel(profileWindowOpen);
 <FaRegUserCircle onClick={() => setProfileWindowOpen((prev)=>!prev)}   className="text-white w-8 h-8 cursor-pointer"/>
 
 {
-  profileWindowOpen && <div   className="absolute right-3 top-16">
+  profileWindowOpen && <div   className="">
   <ProfileWindow setProfileWindowOpen={setProfileWindowOpen} channels={channels} />
 </div>
 }

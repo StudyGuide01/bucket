@@ -1,42 +1,23 @@
 import React from "react";
 
-const VideoCard = () => {
+const VideoCard = ({id, title,thumbnail,avatar,channelName}) => {
   return (
-    <div className="w-full max-w-[400px] cursor-pointer bg-transparent hover:bg-[#232323]/60 hover:scale-[1.02] hover:shadow-lg transition-all duration-300 ease-in-out hover:rounded-xl rounded-lg overflow-hidden group p-2 mx-auto">
-      {/* Thumbnail */}
-      <div className="relative overflow-hidden rounded-t-xl">
-        <img
-          src="https://res.cloudinary.com/do7pydtrf/image/upload/v1761803108/cctyakvlgr4oixkwlbq6.webp"
-          alt="Video Thumbnail"
-          className="w-full h-[200px] object-cover group-hover:scale-105 transition-transform duration-500 ease-in-out"
-        />
-        {/* Duration */}
-        <span className="absolute bottom-2 right-2 bg-black bg-opacity-70 text-white text-xs px-1.5 py-0.5 rounded">
-          12:45
-        </span>
-      </div>
-
-      {/* Video Info */}
-      <div className="flex mt-3 px-2 pb-3 space-x-3">
-        {/* Channel Avatar */}
-        <img
-          src="https://res.cloudinary.com/do7pydtrf/image/upload/v1761803108/cctyakvlgr4oixkwlbq6.webp"
-          alt="Channel Avatar"
-          className="w-10 h-10 rounded-full object-cover flex-shrink-0"
-        />
-
-        {/* Text Content */}
-        <div className="flex flex-col overflow-hidden">
-          <h3 className="text-white font-semibold leading-tight line-clamp-2 group-hover:text-gray-200 transition-colors duration-300">
-            Exploring the Mountains - A Complete Travel Vlog Adventure
-          </h3>
-          <p className="text-gray-400 text-sm mt-1 hover:text-gray-300 transition-colors duration-200">
-            Wanderlust Channel
-          </p>
-          <p className="text-gray-400 text-sm">120K views • 2 days ago</p>
+    <div className="w-full max-w-[580px] hover:max-w-[600px] hover:bg-[#182A2E] hover:p-2 hover:rounded-xl group flex flex-col gap-5 transform transition-all duration-500 ease-in-out hover:scale-[1.02] hover:-translate-y-2" >
+        <div className="relative w-full" style={{position:'inherit'}}>
+          <img src={thumbnail} alt="" className="h-[300px] w-full object-cover rounded-lg group-hover:rounded-none"/>
+        <p className=" text-right -mt-[35px] mr-3">50:50:50</p>
+        </div>
+        <div className="flex gap-3">
+          <div>
+          <img src={avatar} alt="" className="size-14 rounded-full"/>
+          </div>
+          <div className="mt-1">
+            <h1>{title}</h1>
+            <p>{channelName}</p>
+            <span>111 Views . 1 month</span>
+          </div>
         </div>
       </div>
-    </div>
   );
 };
 
