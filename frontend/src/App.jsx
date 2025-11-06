@@ -14,6 +14,7 @@ import CreateChannel from './components/channel/CreateChannel'
 import ChannelScreen from './screens/ChannelScreen'
 import CreateContent from './components/channel/CreateContent'
 import UploadVideoPage from './components/video/UploadVideoPage'
+import VideoDisplay from './components/video/VideoDisplay'
 // import UploadVideoPage from './components/channel/UploadVideoPage'
 
 function App() {
@@ -41,6 +42,7 @@ function App() {
 <Route path='/create-channel' element={<CreateChannel/>}></Route>
 <Route path='/create-content' element={<CreateContent/>}></Route>
 <Route path='/create/upload-video' element={<UploadVideoPage/>}></Route>
+<Route path='/watch' element={<VideoDisplay/>}></Route>
       </Routes>
 
 
