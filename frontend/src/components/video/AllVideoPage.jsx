@@ -3,8 +3,59 @@ import React, { useEffect, useState } from "react";
 import VideoCart from "./VideoCart";
 import moment from 'moment';
 
+const getDurations = async (url) => {
+  return new Promise((resolve) => {
+    const video = document.createElement('video');
+    video.preload = 'metadata';
+    video.crossOrigin = 'anonymous';
+    video.src = url;
+    video.load();
+
+    const format = (n) => String(n).padStart(2, '0');
+
+    video.onloadedmetadata = () => {
+      const totalSecond = Math.floor(video.duration);
+      const hour = Math.floor(totalSecond / 3600);
+      const minute = Math.floor((totalSecond % 3600) / 60);
+      const second = totalSecond % 60;
+
+      if (hour > 0) {
+        resolve(`${hour}:${format(minute)}:${format(second)}`);
+      } else {
+        resolve(`${minute}:${format(second)}`);
+      }
+    };
+
+    video.onerror = (err) => {
+      console.warn(" Metadata error for:", url, err);
+      resolve("0:00");
+    };
+  });
+};
+
+
 const AllVideoPage = () => {
   const [allVideo, setAllVideo] = useState([]);
+  const [duration,setDuration] = useState({});
+
+  useEffect(()=>{
+    const fetchDuration = async()=>{
+      if(Array.isArray(allVideo) && allVideo.length > 0){
+        const durations = {};
+        for(const video of allVideo){
+          const formated = await getDurations(video?.videoUrl);
+          durations[video._id]= formated; 
+        }
+
+setDuration(durations);
+      }
+    }
+
+    fetchDuration();
+  },[allVideo]);
+
+  
+
   useEffect(() => {
     const getAllVideos = async () => {
       try {
@@ -34,6 +85,7 @@ const AllVideoPage = () => {
             key={video._id} 
             id={video._id}
             title={video.title} 
+            duration={duration[video._id]  || '0:00'}
             thumbnail={video.thumbnail} 
             avatar={video?.channel?.avatar}
             channelName={video?.channel?.channelName}

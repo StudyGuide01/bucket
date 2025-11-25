@@ -1,7 +1,7 @@
 import express from 'express';
 import isAuth from '../middleware/isAuth.js';
 import upload from '../middleware/multer.js';
-import { getAllVideos, uploadVideo } from '../controller/video.controller.js';
+import { getAllVideos, getSingleVideo, uploadVideo } from '../controller/video.controller.js';
 const router = express.Router();
 
 router.post('/create-video/:id',isAuth,upload.fields([
@@ -10,4 +10,5 @@ router.post('/create-video/:id',isAuth,upload.fields([
 ]),uploadVideo);
 
 router.get('/get-all-videos',isAuth,getAllVideos);
+router.get('/play-video/:id',isAuth, getSingleVideo);
 export default router;

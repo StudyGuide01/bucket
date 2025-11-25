@@ -72,6 +72,143 @@ export const getAllVideos = async(req, res)=>{
 
 
 
+
+export const getSingleVideo = async (req, res) => {
+  try {
+    const videoId = req.params.id;
+
+    // Validate ObjectId
+    if (!mongoose.Types.ObjectId.isValid(videoId)) {
+      return res.status(400).json({ message: "Invalid video ID" });
+    }
+
+    // Aggregation
+    let video = await VideoModel.aggregate([
+      { $match: { _id: new mongoose.Types.ObjectId(videoId) } },
+      {
+        $lookup: {
+          from: "channels",
+          localField: "channel",
+          foreignField: "_id",
+          as: "channelDetails"
+        }
+      },
+      { $unwind: "$channelDetails" },
+      {
+        $project: {
+          _id: 1,
+          videoUrl: 1,
+          title: 1,
+          description: 1,
+          like: 1,
+          disLike: 1,
+          views: 1,
+          channel: {
+            channelName: "$channelDetails.channelName",
+            banner: "$channelDetails.banner"
+          }
+        }
+      }
+    ]);
+
+    // Agar video nahi mila
+    if (!video.length) {
+      return res.status(404).json({ message: "Video not found" });
+    }
+
+    // Array ka first element hi actual video object
+    video = video[0];
+
+    // Response bhejna
+    return res.status(200).json({
+      success: true,
+      video
+    });
+
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Server error" });
+  }
+};
+
+
+
+// //get play video 
+// export const playedVideo = async(req, res)=>{
+//     try {
+//         const userId = req.id;
+//          const videoId = req.params.id;
+
+//   // Validation check
+//     if (!mongoose.Types.ObjectId.isValid(videoId)) {
+//       return res.status(400).json({ message: "Invalid video ID" });
+//     }
+
+// //     const step1 = await VideoModel.aggregate([
+// //   { $match: { _id: new mongoose.Types.ObjectId(videoId) } }
+// // ]);
+// // console.log("STEP 1 - Match Output:", step1);
+
+// // const step2 = await VideoModel.aggregate([
+// //   { $match: { _id: new mongoose.Types.ObjectId(videoId) } },
+// //   {
+// //     $lookup: {
+// //       from: "channels",
+// //       localField: "channel",
+// //       foreignField: "_id",
+// //       as: "channelDetails"
+// //     }
+// //   }
+// // ]);
+// // console.log("STEP 2 - Lookup Output:", step2);
+
+
+// const step5 = await VideoModel.aggregate([
+//   { $match: { _id: new mongoose.Types.ObjectId(videoId) } },
+
+//   // Join channels collection
+//   {
+//     $lookup: {
+//       from: "channels",
+//       localField: "channel",
+//       foreignField: "_id",
+//       as: "channelDetails"
+//     }
+//   },
+
+//   // Convert array to object (ek hi channel expected)
+//   { $unwind: "$channelDetails" },
+
+//   // Select only required fields
+//   {
+//     $project: {
+//       _id: 1,
+//       videoUrl: 1,
+//       title: 1,
+//       description: 1,
+//       like: 1,
+//       disLike: 1,
+//       views: 1,
+//       channel: {                 // custom object create kar rahe
+//         channelName: "$channelDetails.channelName",
+//         banner: "$channelDetails.banner"
+//       }
+//     }
+//   }
+// ]);
+
+
+// console.log('step to check response ',step5)
+
+
+
+
+//     } catch (error) {
+//         console.log('Error while get current video');
+//     }
+// }
+
+
 // export const uploadVideo = async (req, res) => {
 //   const session = await mongoose.startSession();
 //   session.startTransaction(); //  ensure atomic DB write
