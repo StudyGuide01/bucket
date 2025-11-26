@@ -4,11 +4,15 @@ import { useForm } from "react-hook-form"; //  import react-hook-form
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { useDispatch } from "react-redux";
+import { setUser } from "../../redux/userSlice";
+
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [loading,setLoading] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   //  React Hook Form setup
   const {
@@ -24,6 +28,7 @@ const Login = () => {
    try {
     const response = await axios.post('http://localhost:8000/api/v1/user/login',data,{withCredentials:true});
    if(response.data.success){
+    dispatch(setUser(response.data.user));
     navigate('/');
      toast.success(response.data.message || "Login successful!");
      reset();

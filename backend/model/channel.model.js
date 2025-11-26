@@ -29,7 +29,7 @@ const channelSchema = new mongoose.Schema({
         type:String,
         default:''
     },
-     handle: { type: String, unique: true }, // like @tech_world
+     handle: { type: String, unique: true }, 
     subscribers:[{
         type:mongoose.Schema.Types.ObjectId,
         ref:'User'

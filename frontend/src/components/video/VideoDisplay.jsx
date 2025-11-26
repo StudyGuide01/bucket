@@ -5,6 +5,9 @@ import { IoPauseCircleOutline, IoPlayCircleOutline } from "react-icons/io5";
 import { MdOutlineArrowLeft, MdOutlineArrowRight } from "react-icons/md";
 import { FaExpand, FaVolumeMute, FaVolumeUp } from "react-icons/fa";
 import VideoBody from "./VideoBody";
+import VideoComment from "./VideoComment";
+
+
 
 /* ---------------------- REDUCER & INITIAL STATE ---------------------- */
 
@@ -47,8 +50,7 @@ function videoReducer(state, action) {
 const VideoDisplay = () => {
   const { id } = useParams();
   const videoRef = useRef();
-  const isSeekingRef = useRef(false); // FIX for backward seek
-
+  const isSeekingRef = useRef(false); 
   const [video, setVideo] = useState();
   const [state, dispatch] = useReducer(videoReducer, initialState);
 
@@ -310,7 +312,12 @@ const VideoDisplay = () => {
 
 {/* Body Section */}
    <div className="px-3 pb-10">
-       <VideoBody/>
+       <VideoBody id={id}/>
+   </div>
+
+   {/* comment section */}
+   <div className="px-3">
+    <VideoComment/>
    </div>
 
 

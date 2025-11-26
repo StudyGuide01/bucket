@@ -4,6 +4,7 @@ import uploadCloudinary from "../config/cloudinary.js";
 import ChannelModel from "../model/channel.model.js";
 import UserModel from "../model/user.model.js";
 import shortid from "shortid"; // for unique handles
+import VideoModel from "../model/video.model.js";
 
 // Helper: slugify channel name for handle
 const generateHandle = (name) => {
@@ -105,3 +106,116 @@ export const getOwnerChannel = async(req, res)=>{
   }
 
 }
+
+
+// subscribe 
+// export const subscribe = async(req, res)=>{
+// try {
+//   const userId = req.id;
+// const {id} = req.params;
+
+// const channel = await VideoModel.findById(id).populate('channel');
+// if(!channel){
+//   return res.status(404).json({message:'This channel is not present to subscribe',success:false});
+// }
+
+
+
+// } catch (error) {
+  
+// }
+// }
+
+export const subscribe = async (req, res) => {
+  try {
+    const userId = req.id;
+    const { id: videoId } = req.params;
+
+
+    const video = await VideoModel.findById(videoId).select("channel");
+
+
+
+    if (!video) {
+      return res.status(404).json({
+        message: "Video not found",
+        success: false,
+      });
+    }
+
+    const channelId = video.channel;
+    
+
+    // Fetch ONLY required fields from channel using aggregation
+    const result = await ChannelModel.aggregate([
+      { $match: { _id: channelId } },
+      {
+        $project: {
+          owner: 1,
+          subscribers: 1,
+        },
+      },
+    ]);
+
+
+
+    
+    const channel = result[0];
+
+
+    if (!channel) {
+      return res.status(404).json({
+        message: "Channel not found",
+        success: false,
+      });
+    }
+
+    //  Prevent subscribing to your own channel
+    if (channel.owner.toString() === userId.toString()) {
+      return res.status(400).json({
+        message: "You cannot subscribe to your own channel",
+        success: false,
+      });
+    }
+
+    //  Toggle subscription
+    const isSubscribed = channel.subscribers.some(
+      (sub) => sub.toString() === userId.toString()
+    );
+
+
+    
+    if (isSubscribed) {
+      await ChannelModel.updateOne(
+        { _id: channelId },
+        { $pull: { subscribers: userId } }
+      );
+
+      return res.status(200).json({
+        message: "Unsubscribed",
+        subscribed: false,
+        success: true,
+      });
+
+    } else {
+      await ChannelModel.updateOne(
+        { _id: channelId },
+        { $addToSet: { subscribers: userId } } 
+      );
+
+      return res.status(200).json({
+        message: "Subscribed",
+        subscribed: true,
+        success: true,
+      });
+    }
+
+    
+  } catch (error) {
+    console.error("Subscribe Error:", error);
+    return res.status(500).json({
+      message: "Server error",
+      success: false,
+    });
+  }
+};

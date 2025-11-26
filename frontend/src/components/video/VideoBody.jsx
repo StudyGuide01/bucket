@@ -1,7 +1,24 @@
 import React from 'react'
 import VideoDescription from './VideoDescription'
+import axios from 'axios'
 
-const VideoBody = () => {
+const VideoBody = ({id}) => {
+
+  const handleSubscriber = async () => {
+  try {
+    const response = await axios.post(
+      `http://localhost:8000/api/v1/channel/subscribe/${id}`,
+      {},
+      { withCredentials: true }
+    );
+
+    console.log(response.data);
+
+  } catch (error) {
+    console.log(error);
+  }
+};
+
   return (
     <>
       {/* TITLE WITH LIKE SECTION */}
@@ -26,7 +43,7 @@ const VideoBody = () => {
             </div>
 
             {/* Subscribe Button */}
-            <button className="bg-white text-black px-4 py-2 rounded-full font-semibold hover:bg-gray-300">
+            <button onClick={handleSubscriber} className="bg-white text-black px-4 py-2 rounded-full font-semibold hover:bg-gray-300">
               Subscriber
             </button>
           </div>
@@ -58,35 +75,7 @@ const VideoBody = () => {
       {/* Description Section */}
       <VideoDescription/>
 
-      {/* COMMENTS SECTION */}
-      {/* <div className="mt-5 text-white px-2 md:px-0">
-
-        <div className="flex items-center gap-4 mb-3">
-          <p className="text-gray-300">filter</p>
-        </div>
-
-        <div className="mt-3 space-y-6">
-
-          <div className="flex items-start gap-3 mt-10">
-            <div className="w-10 h-10 bg-gray-500 rounded-full"></div>
-            <div>
-              <p className="font-semibold">User Name</p>
-              <p className="text-gray-300 text-sm">kon comment karta he kon kis ko reply deta he</p>
-            </div>
-          </div>
-
-          <div className="ml-14">
-            <div className="flex items-start gap-3">
-              <div className="w-8 h-8 bg-gray-600 rounded-full"></div>
-              <div>
-                <p className="font-semibold">Reply User</p>
-                <p className="text-gray-400 text-sm">kon kis ko reply deta he</p>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </div> */}
+    
 
     </>
   )
